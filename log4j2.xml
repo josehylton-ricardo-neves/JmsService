@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="log-path">/UtilitariosGIS/GisJmsServices/logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %highlight{%5level} [Thread: %t] [PID:%5pid | TID:%5tid] %class{1}.java:%line - %msg %n
+				</pattern>
+			</PatternLayout>
+		</Console>
+		<!-- RollingFile Appender -->
+		<RollingFile name="RollingFile"
+			fileName="${log-path}/GisJmsService.log" bufferedIo="false"
+			filePattern="${log-path}/GisJmsService/GisJmsService-%i.log">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %highlight{%5level} %t [PID:%5pid | TID:%5tid] %class{1}.java:%line - %msg %n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="2 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+		<!-- RollingFile Appender Consumer -->
+		<RollingFile name="RollingFileJmsConsumer" bufferedIo="false"
+			fileName="${log-path}/GisJmsServices_Consumer.log"
+			filePattern="${log-path}/consumer/GisJmsServices_Consumer-%i.log">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %highlight{%5level} %t [PID:%5pid | TID:%5tid] %class{1}.java:%line - %msg %n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="2 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		<!-- RollingFile Appender ConnectionConsumer -->
+		<RollingFile name="RollingFileJmsConnectionConsumer" bufferedIo="false"
+			fileName="${log-path}/GisJmsServices_ConnectionConsumer.log"
+			filePattern="${log-path}/consumer/connectionConsumer/GisJmsServices_ConnectionConsumer-%i.log">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %highlight{%5level} %t [PID:%5pid | TID:%5tid] %class{1}.java:%line - %msg %n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="2 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		<!-- RollingFile Appender Producer -->
+		<RollingFile name="RollingFileJmsProducer" bufferedIo="false"
+			fileName="${log-path}/GisJmsServices_Producer.log"
+			filePattern="${log-path}/producer/GisJmsServices_Producer-%i.log">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %highlight{%5level} %t [PID:%5pid | TID:%5tid] %class{1}.java:%line - %msg %n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="2 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		<!-- RollingFile Appender ConnectionProducer -->
+		<RollingFile name="RollingFileJmsConnectionProducer" bufferedIo="false"
+			fileName="${log-path}/GisJmsServices_ConnectionProducer.log"
+			filePattern="${log-path}/producer/connectionProducer/GisJmsServices_ConnectionProducer-%i.log">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %highlight{%5level} %t [PID:%5pid | TID:%5tid] %class{1}.java:%line - %msg %n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="2 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+	</Appenders>	
+	<loggers>
+		<root level="trace">
+			<appender-ref ref="Console" level="info" />
+			<appender-ref ref="RollingFile" level="info" />
+		</root>
+		<logger name="com.fedex" level="trace" additivity="false">
+			<appender-ref ref="Console" level="all" />
+			<appender-ref ref="RollingFile" level="info" />
+		</logger>
+		<logger name="com.fedex.gisjmsservices.consumer" level="trace" additivity="false">
+			<appender-ref ref="Console" level="trace" /> 
+			<appender-ref ref="RollingFileJmsConsumer" level="trace"/>
+		</logger>
+		<logger name="com.fedex.gisjmsservices.connectionconsumer" level="trace" additivity="false">
+			<appender-ref ref="Console" level="trace" /> 
+			<appender-ref ref="RollingFileJmsConnectionConsumer" level="trace"/>
+		</logger>
+		<logger name="com.fedex.gisjmsservices.producer" level="trace" additivity="false">
+			<appender-ref ref="Console" level="trace" /> 
+			<appender-ref ref="RollingFileJmsProducer" level="trace"/>
+		</logger>
+		<logger name="com.fedex.gisjmsservices.connectionproducer" level="trace" additivity="false">
+			<appender-ref ref="Console" level="trace" /> 
+			<appender-ref ref="RollingFileJmsConnectionProducer" level="trace"/>
+		</logger>
+	</loggers>
+</Configuration>
